@@ -2,28 +2,30 @@
 # => [1,4]  # for a profit of $15 - $3 == $12
 
 
-def stock_picker(array)
+def stock_picker(stock_array)
 
-    profit = array[1] - array[0] 
-    returned_array = [nil,nil]
+  buy_day = 0
+  sell_day = 0
+  profit = 0
 
-    array.each_with_index do |ele,i|
+  (0...stock_array.length).each do |buy_test|
+    (buy_test...stock_array.length).each do |sell_test|
+      potential_profit = stock_array[sell_test] - stock_array[buy_test]
 
-        (i+1...array.length).each do |a|
-            if array[a] - array[i] > profit
-                profit = array[a] - array[i] 
-                returned_array = [i,a]
-            end
 
-        end
+      if potential_profit > profit
+        buy_day = buy_test
+        sell_day = sell_test
+        profit = potential_profit
+      end
 
     end
-    returned_array
+  end
+
+  [buy_day,sell_day]
+
 end
 
 
 
-
-
-p stock_picker([9,8,7,6,5,4,3,2,1])
-#=> [1,4]  # for a profit of $15 - $3 == $12
+p stock_picker([17,3,6,9,15,8,6,1,10])
